@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "ltdc.h"
 #include "usart.h"
 #include "xspi.h"
 #include "gpio.h"
@@ -26,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "norflash_w25q128.h"
+#include "XSPI_Boot.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,7 +60,7 @@ static void MPU_Config(void);
 /* USER CODE BEGIN 0 */
 norflash_type_t norflash_type;
 uint32_t flashsize;
-static uint8_t g_text_buf[] = {"TX16 MK3 NorFlash test"};
+static uint8_t g_text_buf[] = {"TX16 MK3 Bootloader NorFlash test"};
 #define TEXT_SIZE (sizeof(g_text_buf))
 uint8_t data[TEXT_SIZE];
 /* USER CODE END 0 */
@@ -99,7 +99,6 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
 //  MX_XSPI1_Init();
-  MX_LTDC_Init();
   /* USER CODE BEGIN 2 */
 	printf_tx1("init ok \n");
 	norflash_type = norflash_init();
@@ -109,13 +108,15 @@ int main(void)
 	}
 	    /* 获取NOR Flash片大小 */
     flashsize = norflash_get_chip_size();
-	printf_tx1("Start Write...\n");
+	printf_tx1("flashsize =%d,Start Write...\n",flashsize);
 	if(norflash_write(flashsize - TEXT_SIZE, g_text_buf, TEXT_SIZE)!=0) printf_tx1("norflash_write Err\n");
-//	LL_mDelay(10);
-//  norflash_memory_mapped();
 	LL_mDelay(100);
 	if(norflash_read(flashsize - TEXT_SIZE, data, TEXT_SIZE)!=0) printf_tx1("norflash_read Err\n");
 	printf_tx1("The Data Readed Is:%s\n",(char *)data);
+	LL_mDelay(10);
+  norflash_memory_mapped();
+	Boot_JumpToApp();	
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -125,7 +126,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		LL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+		LL_GPIO_TogglePin(LED0_GPIO_Port, LED0_Pin);
 		LL_mDelay(400);
   }
   /* USER CODE END 3 */

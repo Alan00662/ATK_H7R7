@@ -2,7 +2,6 @@
 "atk_h7r7_boot\startup_stm32h7r7xx.o"
 "atk_h7r7_boot\main.o"
 "atk_h7r7_boot\gpio.o"
-"atk_h7r7_boot\ltdc.o"
 "atk_h7r7_boot\usart.o"
 "atk_h7r7_boot\xspi.o"
 "atk_h7r7_boot\stm32h7rsxx_it.o"
@@ -32,6 +31,7 @@
 "atk_h7r7_boot\stm32h7rsxx_ll_dma.o"
 "atk_h7r7_boot\stm32h7rsxx_hal_xspi.o"
 "atk_h7r7_boot\norflash_w25q128.o"
+"atk_h7r7_boot\xspi_boot.o"
 --strict --scatter "stm32h7r7xx_flash.sct"
 --diag_suppress L6312,L6314 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
