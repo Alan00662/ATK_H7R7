@@ -35,21 +35,13 @@ extern "C" {
 extern LTDC_HandleTypeDef hltdc;
 
 /* USER CODE BEGIN Private defines */
-/* LTDC LCD���Ų��� */
-#define LTDC_BL_GPIO_PORT               GPIOD
-#define LTDC_BL_GPIO_PIN                GPIO_PIN_15
-#define LTDC_BL_GPIO_CLK_ENABLE()       do { __HAL_RCC_GPIOD_CLK_ENABLE(); } while (0)
 
-#define LTDC_BL(x)                      do { (x) ?                                                                  \
-                                            HAL_GPIO_WritePin(LTDC_BL_GPIO_PORT, LTDC_BL_GPIO_PIN, GPIO_PIN_SET):   \
-                                            HAL_GPIO_WritePin(LTDC_BL_GPIO_PORT, LTDC_BL_GPIO_PIN, GPIO_PIN_RESET); \
-                                        } while (0)
 /* USER CODE END Private defines */
 
 void MX_LTDC_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-void BL_Init(void);
+
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

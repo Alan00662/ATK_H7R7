@@ -21,23 +21,7 @@
 #include "ltdc.h"
 
 /* USER CODE BEGIN 0 */
-uint16_t g_ltdc_lcd_framebuf[1280][800] __attribute__((section(".bss.ARM.__at_0x70000000")));
-uint16_t *g_ltdc_framebuf[2];
-		
-void BL_Init(void)
-{
-	  GPIO_InitTypeDef gpio_init_struct = {0};
-	    /* ʹ��ʱ�� */
-    LTDC_BL_GPIO_CLK_ENABLE();
-	    /* ����LTDC LCD BL���� */
-    gpio_init_struct.Pin = LTDC_BL_GPIO_PIN;
-    gpio_init_struct.Mode = GPIO_MODE_OUTPUT_PP;
-    gpio_init_struct.Pull = GPIO_PULLUP;
-    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(LTDC_BL_GPIO_PORT, &gpio_init_struct);
-			
-		LTDC_BL(1);
-}
+
 /* USER CODE END 0 */
 
 LTDC_HandleTypeDef hltdc;
@@ -47,7 +31,7 @@ void MX_LTDC_Init(void)
 {
 
   /* USER CODE BEGIN LTDC_Init 0 */
-	g_ltdc_framebuf[0] = (uint16_t *)g_ltdc_lcd_framebuf;
+
   /* USER CODE END LTDC_Init 0 */
 
   LTDC_LayerCfgTypeDef pLayerCfg = {0};
@@ -264,95 +248,5 @@ void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef* ltdcHandle)
 }
 
 /* USER CODE BEGIN 1 */
-/**
- * @brief   LTDC����
- * @param   x: ���X����
- * @param   y: ���Y����
- * @param   color: �����ɫ
- * @retval  ��
- */
-void ltdc_draw_point(uint16_t x, uint16_t y, uint32_t color)
-{
-
-//    if (lcdltdc.dir == 0) //����
-//    {
-        *(uint16_t *)((uint32_t)g_ltdc_framebuf[0] + 2 * (800 * (480 - x - 1) + y)) = color;
-//    }
-//    else //����
-//    {
-//        *(uint16_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.pwidth * y + x)) = color;
-//    }
-
-}
-
-void ltdc_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint32_t color)
-{
-    uint32_t psx;
-    uint32_t psy;
-    uint32_t pex;
-    uint32_t pey;
-    uint32_t timeout = 0;
-    uint16_t offline;
-    uint32_t addr;
-    
-//    if (lcdltdc.dir == 0)
-//    {
-        if (ex >= 480)
-        {
-            ex = 480 - 1;
-        }
-        
-        if (sx >= 480)
-        {
-            sx = 480 - 1;
-        }
-        
-        psx = sy;
-        psy = 480 - ex - 1;
-        pex = ey;
-        pey = 480 - sx - 1;
-//    }
-//    else
-//    {
-//        psx = sx;
-//        psy = sy;
-//        pex = ex;
-//        pey = ey;
-//    }
-    
-//    offline = lcdltdc.pwidth - (pex - psx + 1);
-//    addr = ((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (800 * psy + psx));
-//    offline = 800 - (pex - psx + 1);
-//    addr = ((uint32_t)g_ltdc_framebuf[0] + 2 * (800 * psy + psx));
-//    
-//    /* ����DMA2D */
-//    DMA2D->CR &= ~(DMA2D_CR_START);
-//    DMA2D->CR = DMA2D_R2M;
-//    DMA2D->OPFCCR = LTDC_PIXEL_FORMAT_RGB565;
-//    DMA2D->OOR = offline;
-//    DMA2D->OMAR = addr;
-//    DMA2D->NLR = (pey - psy + 1) | ((pex - psx + 1) << 16);
-//    DMA2D->OCOLR = color;
-//    
-//    /* ����DMA2D */
-//    DMA2D->CR |= DMA2D_CR_START;
-//    
-//    /* �ȴ�DMA2D������� */
-//    while ((DMA2D->ISR & (DMA2D_FLAG_TC)) == 0)
-//    {
-//        if (++timeout > 0x1FFFFF)
-//        {
-//            break;
-//        }
-//    } 
-//    
-//    /* ���DMA2D������ɱ�־ */
-//    DMA2D->IFCR |= DMA2D_FLAG_TC;
-}
-
-void ltdc_clear(uint32_t color)
-{
-//    ltdc_fill(0, 0, 800 - 1, 480 - 1, color);
-}
 
 /* USER CODE END 1 */
