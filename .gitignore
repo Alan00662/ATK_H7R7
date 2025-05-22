@@ -2,6 +2,8 @@
 *.d
 ATK_H7R7_Keil/MDK-ARM/Boot/tx16mk3mx_Boot
 ATK_H7R7_Keil/MDK-ARM/Boot/tx16mk3mx_Appli
+ATK_H7R7_Bootloader/MDK-ARM/Boot/tx16mk3mx_Boot
+ATK_H7R7_Bootloader/MDK-ARM/Boot/tx16mk3mx_Appli
 # Object files
 *.o
 *.ko
