@@ -1,7 +1,7 @@
 Dependencies for Project 'ATK_H7R7_Boot', Target 'ATK_H7R7_Boot': (DO NOT MODIFY !)
 CompilerVersion: 6180000::V6.18::ARMCLANG
 F (../startup_stm32h7r7xx.s)(0x682E7BAD)(--target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -masm=auto -c-gdwarf-4-I./RTE/_ATK_H7R7_Boot-IC:/Users/Admin/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-Wa,armasm,--pd,"__UVISION_VERSION SETA 537" -Wa,armasm,--pd,"_RTE_ SETA 1" -Wa,armasm,--pd,"STM32H7R7xx SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o atk_h7r7_boot/startup_stm32h7r7xx.o)
-F (../../Boot/Core/Src/main.c)(0x682E8237)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../Boot/Core/Inc -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc -I ../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy -I ../../BSP-I./RTE/_ATK_H7R7_Boot-IC:/Users/Admin/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32H7R7xx -D_RTE_ -DSTM32H7R7xx -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER-o atk_h7r7_boot/main.o -MD)
+F (../../Boot/Core/Src/main.c)(0x682EE9A8)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../Boot/Core/Inc -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc -I ../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy -I ../../BSP-I./RTE/_ATK_H7R7_Boot-IC:/Users/Admin/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32H7R7xx -D_RTE_ -DSTM32H7R7xx -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER-o atk_h7r7_boot/main.o -MD)
 I (..\..\Boot\Core\Inc\main.h)(0x682DA35D)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal.h)(0x677628E0)
 I (..\..\Boot\Core\Inc\stm32h7rsxx_hal_conf.h)(0x682E7BA9)
@@ -48,7 +48,7 @@ I (..\..\Boot\Core\Inc\ltdc.h)(0x682E7BA9)
 I (..\..\Boot\Core\Inc\usart.h)(0x682DA2AA)
 I (..\..\Boot\Core\Inc\xspi.h)(0x682E7B52)
 I (..\..\Boot\Core\Inc\gpio.h)(0x682DA1A7)
-I (..\..\BSP\norflash_w25q128.h)(0x682E7E7D)
+I (..\..\BSP\norflash_w25q128.h)(0x682EDCF3)
 F (../../Boot/Core/Src/gpio.c)(0x682E7BA8)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../Boot/Core/Inc -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc -I ../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy -I ../../BSP-I./RTE/_ATK_H7R7_Boot-IC:/Users/Admin/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32H7R7xx -D_RTE_ -DSTM32H7R7xx -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER-o atk_h7r7_boot/gpio.o -MD)
 I (..\..\Boot\Core\Inc\gpio.h)(0x682DA1A7)
 I (..\..\Boot\Core\Inc\main.h)(0x682DA35D)
@@ -1120,9 +1120,8 @@ I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal_ltdc_ex.h)(0x677628E
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal_pwr.h)(0x677628E0)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal_pwr_ex.h)(0x677628E0)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal_xspi.h)(0x677628E0)
-F (..\..\BSP\norflash_w25q128.c)(0x682E7E91)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../Boot/Core/Inc -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc -I ../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy -I ../../BSP-I./RTE/_ATK_H7R7_Boot-IC:/Users/Admin/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32H7R7xx -D_RTE_ -DSTM32H7R7xx -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER-o atk_h7r7_boot/norflash_w25q128.o -MD)
-I (..\..\BSP\norflash_w25q128.h)(0x682E7E7D)
-I (..\..\Boot\Core\Inc\main.h)(0x682DA35D)
+F (..\..\BSP\norflash_w25q128.c)(0x682EE3BB)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../Boot/Core/Inc -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc -I ../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy -I ../../BSP-I./RTE/_ATK_H7R7_Boot-IC:/Users/Admin/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32H7R7xx -D_RTE_ -DSTM32H7R7xx -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER-o atk_h7r7_boot/norflash_w25q128.o -MD)
+I (..\..\BSP\norflash_w25q128.h)(0x682EDCF3)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal.h)(0x677628E0)
 I (..\..\Boot\Core\Inc\stm32h7rsxx_hal_conf.h)(0x682E7BA9)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal_rcc.h)(0x677628E0)
@@ -1155,6 +1154,7 @@ I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal_ltdc_ex.h)(0x677628E
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal_pwr.h)(0x677628E0)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal_pwr_ex.h)(0x677628E0)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_hal_xspi.h)(0x677628E0)
+I (..\..\Boot\Core\Inc\main.h)(0x682DA35D)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_ll_usart.h)(0x677628E0)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_ll_system.h)(0x677628E0)
 I (..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\stm32h7rsxx_ll_gpio.h)(0x677628E0)

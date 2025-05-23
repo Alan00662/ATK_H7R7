@@ -24,6 +24,9 @@
  
 #include "FlashOS.h"        // FlashOS Structures
 #include "norflash_w25q128.h"
+#include "bsp.h" 
+#include "usart.h" 
+
 /* 
    Mandatory Flash Programming Functions (Called by FlashOS):
                 int Init        (unsigned long adr,   // Initialize Flash
@@ -61,6 +64,13 @@
 int Init (unsigned long adr, unsigned long clk, unsigned long fnc) {
 
   /* Add your Code */
+	SystemInit();
+	MPU_Config();
+	HAL_Init();
+	if(SystemClock_Config()!=0) 	printf_tx1("SystemClock_Config err\n");return 1;
+	norflash_init();
+	printf_tx1("ok\n");
+	norflash_memory_mapped();
   return (0);                                  // Finished without Errors
 }
 
@@ -84,8 +94,10 @@ int UnInit (unsigned long fnc) {
  */
 
 int EraseChip (void) {
-
+	norflash_init();
+if(norflash_erase_chip()!=0) return 1;
   /* Add your Code */
+	printf_tx1("EraseChip ok\n");
   return (0);                                  // Finished without Errors
 }
 
@@ -97,7 +109,9 @@ int EraseChip (void) {
  */
 
 int EraseSector (unsigned long adr) {
-
+	norflash_init();
+    adr -= QSPI_FLASH_MEM_ADDR;
+	if(norflash_erase_sector(adr)!=0) return 1;
   /* Add your Code */
   return (0);                                  // Finished without Errors
 }
@@ -114,5 +128,7 @@ int EraseSector (unsigned long adr) {
 int ProgramPage (unsigned long adr, unsigned long sz, unsigned char *buf) {
 
   /* Add your Code */
+	adr -= QSPI_FLASH_MEM_ADDR;
+	if(norflash_program_page(adr,buf,sz)!=0) return 1;
   return (0);                                  // Finished without Errors
 }

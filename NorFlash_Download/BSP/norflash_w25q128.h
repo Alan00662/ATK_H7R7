@@ -1,100 +1,96 @@
 /**
  ****************************************************************************************************
  * @file        norflash_w25q128_dual.h
- * @author      ÕıµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2024-05-21
- * @brief       NOR Flash Ë«W25Q128Çı¶¯´úÂë
- * @license     Copyright (c) 2020-2032, ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾
+ * @brief       NOR Flash åŒW25Q128é©±åŠ¨ä»£ç 
+ * @license     Copyright (c) 2020-2032, å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  * 
- * ÊµÑéÆ½Ì¨:ÕıµãÔ­×Ó H7R7¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®éªŒå¹³å°:æ­£ç‚¹åŸå­ H7R7å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  * 
  ****************************************************************************************************
  */
 
 #ifndef __NORFLASH_W25Q128_H
 #define __NORFLASH_W25Q128_H
-
 #include "stm32h7rsxx_hal.h"
 
-/* NOR FlashÉè±¸Ö§³Ö¶¨Òå */
-//#define NORFLASH_SUPPORT_MX25UM25645G   /* MX25UM25645G */
-#define NORFLASH_SUPPORT_W25Q128_DUAL   /* Ë«W25Q128 */
+#define QSPI_FLASH_MEM_ADDR         			  0x90000000 //W25Qxxç³»åˆ—èŠ¯ç‰‡çš„é¦–åœ°å€
+//W25Q128JVæ˜¯16Mçš„FLASH
+#define QSPI_FLASH_SIZE     						  25                       /* ä¸¤ä¸ª25Q128ï¼Œ Flashå¤§å°ï¼Œ2^25 = 32MB*/
+/* NOR Flashè®¾å¤‡æ”¯æŒå®šä¹‰ */
+#define NORFLASH_SUPPORT_W25Q128_DUAL   /* åŒW25Q128 */
 
-/* NOR FlashÉÈÇø»º³åÇø´óĞ¡¶¨Òå */
+/* NOR Flashæ‰‡åŒºç¼“å†²åŒºå¤§å°å®šä¹‰ */
 #define NORFLASH_SECTOR_BUFFER_SIZE (0x00002000UL)
 
-/* NOR FlashÄÚ´æÓ³Éä»ùµØÖ·¶¨Òå */
+/* NOR Flashå†…å­˜æ˜ å°„åŸºåœ°å€å®šä¹‰ */
 #define NORFLASH_MEMORY_MAPPED_BASE (XSPI1_BASE)
 
-/* NOR FlashÉè±¸ÀàĞÍ¶¨Òå */
+/* NOR Flashè®¾å¤‡ç±»å‹å®šä¹‰ */
 typedef enum {
-    NORFlash_Unknow = 0,    /* Î´Öª */
-#ifdef NORFLASH_SUPPORT_MX25UM25645G
-    NORFlash_MX25UM25645G,  /* MX25UM25645G */
-#endif /* NORFLASH_SUPPORT_MX25UM25645G */
-#ifdef NORFLASH_SUPPORT_W25Q128_DUAL
-    NORFlash_W25Q128_Dual,  /* Ë«W25Q128 */
-#endif /* NORFLASH_SUPPORT_W25Q128_DUAL */
+    NORFlash_Unknow = 0,    /* æœªçŸ¥ */
+    NORFlash_W25Q128_Dual,  /* åŒW25Q128 */
     NORFlash_Dummy,
 } norflash_type_t;
 
-/* NOR FlashÉè±¸¶¨Òå */
+/* NOR Flashè®¾å¤‡å®šä¹‰ */
 typedef struct {
-    /* NOR FlashÉè±¸ÀàĞÍ */
+    /* NOR Flashè®¾å¤‡ç±»å‹ */
     norflash_type_t type;
     
-    /* NOR FlashÉè±¸²ÎÊı */
+    /* NOR Flashè®¾å¤‡å‚æ•° */
     struct {
-        uint8_t empty_value;    /* ²ÁºóÊı¾İÖµ */
-        uint32_t chip_size;     /* È«Æ¬´óĞ¡ */
-        uint32_t block_size;    /* ¿é´óĞ¡ */
-        uint32_t sector_size;   /* ÉÈÇø´óĞ¡ */
-        uint32_t page_size;     /* Ò³´óĞ¡ */
+        uint8_t empty_value;    /* æ“¦åæ•°æ®å€¼ */
+        uint32_t chip_size;     /* å…¨ç‰‡å¤§å° */
+        uint32_t block_size;    /* å—å¤§å° */
+        uint32_t sector_size;   /* æ‰‡åŒºå¤§å° */
+        uint32_t page_size;     /* é¡µå¤§å° */
     } parameter;
     
-    /* NOR Flash²Ù×÷º¯Êı¼¯ºÏ */
-    struct {
-        uint8_t (*init)(XSPI_HandleTypeDef *hxspi);                                                             /* ³õÊ¼»¯ */
-        uint8_t (*deinit)(XSPI_HandleTypeDef *hxspi);                                                           /* ·´³õÊ¼»¯ */
-        uint8_t (*erase_chip)(XSPI_HandleTypeDef *hxspi);                                                       /* È«Æ¬²Á³ı */
-        uint8_t (*erase_block)(XSPI_HandleTypeDef *hxspi, uint32_t address);                                    /* ¿é²Á³ı */
-        uint8_t (*erase_sector)(XSPI_HandleTypeDef *hxspi, uint32_t address);                                   /* ÉÈÇø²Á³ı */
-        uint8_t (*program_page)(XSPI_HandleTypeDef *hxspi, uint32_t address, uint8_t *data, uint32_t length);   /* Ò³±à³Ì */
-        uint8_t (*read)(XSPI_HandleTypeDef *hxspi, uint32_t address, uint8_t *data, uint32_t length);           /* ¶Á */
-        uint8_t (*memory_mapped)(XSPI_HandleTypeDef *hxspi);                                                    /* ÄÚ´æÓ³Éä */
-    } ops;
+//    /* NOR Flashæ“ä½œå‡½æ•°é›†åˆ */
+//    struct {
+//        uint8_t (*init)(XSPI_HandleTypeDef *hxspi);                                                             /* åˆå§‹åŒ– */
+//        uint8_t (*deinit)(XSPI_HandleTypeDef *hxspi);                                                           /* ååˆå§‹åŒ– */
+//        uint8_t (*erase_chip)(XSPI_HandleTypeDef *hxspi);                                                       /* å…¨ç‰‡æ“¦é™¤ */
+//        uint8_t (*erase_block)(XSPI_HandleTypeDef *hxspi, uint32_t address);                                    /* å—æ“¦é™¤ */
+//        uint8_t (*erase_sector)(XSPI_HandleTypeDef *hxspi, uint32_t address);                                   /* æ‰‡åŒºæ“¦é™¤ */
+//        uint8_t (*program_page)(XSPI_HandleTypeDef *hxspi, uint32_t address, uint8_t *data, uint32_t length);   /* é¡µç¼–ç¨‹ */
+//        uint8_t (*read)(XSPI_HandleTypeDef *hxspi, uint32_t address, uint8_t *data, uint32_t length);           /* è¯» */
+//        uint8_t (*memory_mapped)(XSPI_HandleTypeDef *hxspi);                                                    /* å†…å­˜æ˜ å°„ */
+//    } ops;
 } norflash_t;
 
-/* µ¼³öNOR FlashÉè±¸ */
+/* å¯¼å‡ºNOR Flashè®¾å¤‡ */
 extern const norflash_t norflash_w25q128_dual;
 
-/* º¯ÊıÉùÃ÷ */
-norflash_type_t norflash_init(void);                                                /* ³õÊ¼»¯NOR Flash */
-uint8_t norflash_deinit(void);                                                      /* ·´³õÊ¼»¯NOR Flash */
-uint8_t norflash_erase_chip(void);                                                  /* È«Æ¬²Á³ıNOR Flash */
-uint8_t norflash_erase_block(uint32_t address);                                     /* ¿é²Á³ıNOR Flash */
-uint8_t norflash_erase_sector(uint32_t address);                                    /* ÉÈÇø²Á³ıNOR Flash */
-uint8_t norflash_program_page(uint32_t address, uint8_t *data, uint32_t length);    /* Ò³±à³ÌNOR Flash */
-uint8_t norflash_read(uint32_t address, uint8_t *data, uint32_t length);            /* ¶ÁNOR Flash */
-uint8_t norflash_memory_mapped(void);                                               /* ¿ªÆôNOR FlashÄÚ´æÓ³Éä */
-uint8_t norflash_get_empty_value(void);                                             /* »ñÈ¡NOR Flash²ÁºóÊı¾İÖµ */
-uint32_t norflash_get_chip_size(void);                                              /* »ñÈ¡NOR FlashÆ¬´óĞ¡ */
-uint32_t norflash_get_block_size(void);                                             /* »ñÈ¡NOR Flash¿é´óĞ¡ */
-uint32_t norflash_get_sector_size(void);                                            /* »ñÈ¡NOR FlashÉÈÇø´óĞ¡ */
-uint32_t norflash_get_page_size(void);                                              /* »ñÈ¡NOR FlashÒ³´óĞ¡ */
-uint8_t norflash_write(uint32_t address, uint8_t *data, uint32_t length);           /* Ğ´NOR Flash */
+/* å‡½æ•°å£°æ˜ */
+norflash_type_t norflash_init(void);                                                /* åˆå§‹åŒ–NOR Flash */
+uint8_t norflash_deinit(void);                                                      /* ååˆå§‹åŒ–NOR Flash */
+uint8_t norflash_erase_chip(void);                                                  /* å…¨ç‰‡æ“¦é™¤NOR Flash */
+uint8_t norflash_erase_block(uint32_t address);                                     /* å—æ“¦é™¤NOR Flash */
+uint8_t norflash_erase_sector(uint32_t address);                                    /* æ‰‡åŒºæ“¦é™¤NOR Flash */
+uint8_t norflash_program_page(uint32_t address, uint8_t *data, uint32_t length);    /* é¡µç¼–ç¨‹NOR Flash */
+uint8_t norflash_read(uint32_t address, uint8_t *data, uint32_t length);            /* è¯»NOR Flash */
+uint8_t norflash_memory_mapped(void);                                               /* å¼€å¯NOR Flashå†…å­˜æ˜ å°„ */
+uint8_t norflash_get_empty_value(void);                                             /* è·å–NOR Flashæ“¦åæ•°æ®å€¼ */
+uint32_t norflash_get_chip_size(void);                                              /* è·å–NOR Flashç‰‡å¤§å° */
+uint32_t norflash_get_block_size(void);                                             /* è·å–NOR Flashå—å¤§å° */
+uint32_t norflash_get_sector_size(void);                                            /* è·å–NOR Flashæ‰‡åŒºå¤§å° */
+uint32_t norflash_get_page_size(void);                                              /* è·å–NOR Flashé¡µå¤§å° */
+uint8_t norflash_write(uint32_t address, uint8_t *data, uint32_t length);           /* å†™NOR Flash */
 
-/* º¯ÊıÉùÃ÷ */
-uint8_t norflash_ex_init(void);                                                 /* ³õÊ¼»¯NOR Flash */
-uint8_t norflash_ex_write(uint32_t address, uint8_t *data, uint32_t length);    /* Ğ´NOR Flash */
-uint8_t norflash_ex_read(uint32_t address, uint8_t *data, uint32_t length);     /* ¶ÁNOR Flash */
-uint8_t norflash_ex_erase_sector(uint32_t address);                             /* ÉÈÇø²Á³ıNOR Flash */
+/* å‡½æ•°å£°æ˜ */
+uint8_t norflash_ex_init(void);                                                 /* åˆå§‹åŒ–NOR Flash */
+uint8_t norflash_ex_write(uint32_t address, uint8_t *data, uint32_t length);    /* å†™NOR Flash */
+uint8_t norflash_ex_read(uint32_t address, uint8_t *data, uint32_t length);     /* è¯»NOR Flash */
+uint8_t norflash_ex_erase_sector(uint32_t address);                             /* æ‰‡åŒºæ“¦é™¤NOR Flash */
 
 #endif /* __NORFLASH_W25Q128_DUAL_H */

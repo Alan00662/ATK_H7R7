@@ -10,6 +10,7 @@
       <TargetName>Cortex-M</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>5060750::V5.06 update 6 (build 750)::.\ARMCC</pArmCC>
       <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
@@ -49,7 +50,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>ATK_NorFlash_W25Q128</OutputName>
+          <OutputName>MyATK_NorFlash_W25Q128</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -314,7 +315,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>0</OneElfS>
@@ -330,7 +331,7 @@
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
-            <v6LangP>3</v6LangP>
+            <v6LangP>5</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -440,11 +441,6 @@
               <FilePath>.\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_pwr_ex.c</FilePath>
             </File>
             <File>
-              <FileName>system_stm32h7rsxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Drivers\CMSIS\Device\ST\STM32H7RSxx\Source\Templates\system_stm32h7rsxx.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32h7rsxx_hal_rcc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_rcc.c</FilePath>
@@ -469,6 +465,21 @@
               <FileType>1</FileType>
               <FilePath>.\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_rcc_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>system_stm32h7rsxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Drivers\CMSIS\Device\ST\STM32H7RSxx\Source\Templates\system_stm32h7rsxx.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_uart_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_uart_ex.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -483,6 +494,11 @@
               <FileName>bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\BSP\bsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\BSP\usart.c</FilePath>
             </File>
           </Files>
         </Group>

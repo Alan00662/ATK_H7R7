@@ -20,7 +20,7 @@
 
 #ifndef __NORFLASH_W25Q128_H
 #define __NORFLASH_W25Q128_H
-
+#include "stm32h7rsxx_hal.h"
 #include "main.h"
 
 /* NOR Flash设备支持定义 */
@@ -34,7 +34,7 @@
 #define NORFLASH_MEMORY_MAPPED_BASE (XSPI1_BASE)
 
 /* NOR Flash设备类型定义 */
-typedef enum : uint8_t {
+typedef enum{
     NORFlash_Unknow = 0,    /* 未知 */
 #ifdef NORFLASH_SUPPORT_MX25UM25645G
     NORFlash_MX25UM25645G,  /* MX25UM25645G */
@@ -59,17 +59,17 @@ typedef struct {
         uint32_t page_size;     /* 页大小 */
     } parameter;
     
-    /* NOR Flash操作函数集合 */
-    struct {
-        uint8_t (*init)(XSPI_HandleTypeDef *hxspi);                                                             /* 初始化 */
-        uint8_t (*deinit)(XSPI_HandleTypeDef *hxspi);                                                           /* 反初始化 */
-        uint8_t (*erase_chip)(XSPI_HandleTypeDef *hxspi);                                                       /* 全片擦除 */
-        uint8_t (*erase_block)(XSPI_HandleTypeDef *hxspi, uint32_t address);                                    /* 块擦除 */
-        uint8_t (*erase_sector)(XSPI_HandleTypeDef *hxspi, uint32_t address);                                   /* 扇区擦除 */
-        uint8_t (*program_page)(XSPI_HandleTypeDef *hxspi, uint32_t address, uint8_t *data, uint32_t length);   /* 页编程 */
-        uint8_t (*read)(XSPI_HandleTypeDef *hxspi, uint32_t address, uint8_t *data, uint32_t length);           /* 读 */
-        uint8_t (*memory_mapped)(XSPI_HandleTypeDef *hxspi);                                                    /* 内存映射 */
-    } ops;
+//    /* NOR Flash操作函数集合 */
+//    struct {
+//        uint8_t (*init)(XSPI_HandleTypeDef *hxspi);                                                             /* 初始化 */
+//        uint8_t (*deinit)(XSPI_HandleTypeDef *hxspi);                                                           /* 反初始化 */
+//        uint8_t (*erase_chip)(XSPI_HandleTypeDef *hxspi);                                                       /* 全片擦除 */
+//        uint8_t (*erase_block)(XSPI_HandleTypeDef *hxspi, uint32_t address);                                    /* 块擦除 */
+//        uint8_t (*erase_sector)(XSPI_HandleTypeDef *hxspi, uint32_t address);                                   /* 扇区擦除 */
+//        uint8_t (*program_page)(XSPI_HandleTypeDef *hxspi, uint32_t address, uint8_t *data, uint32_t length);   /* 页编程 */
+//        uint8_t (*read)(XSPI_HandleTypeDef *hxspi, uint32_t address, uint8_t *data, uint32_t length);           /* 读 */
+//        uint8_t (*memory_mapped)(XSPI_HandleTypeDef *hxspi);                                                    /* 内存映射 */
+//    } ops;
 } norflash_t;
 
 /* 导出NOR Flash设备 */

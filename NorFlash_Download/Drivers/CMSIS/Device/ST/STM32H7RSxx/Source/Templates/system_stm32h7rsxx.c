@@ -85,6 +85,7 @@
 extern uint32_t __vector_table;
 #define INTVECT_START ((uint32_t)& __vector_table)
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
+
 extern void * __Vectors;
 #define INTVECT_START ((uint32_t) & __Vectors)
 #elif defined(__GNUC__)

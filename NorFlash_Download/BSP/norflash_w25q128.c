@@ -20,7 +20,6 @@
 
 #include "norflash_w25q128.h"
 
-
 /* W25Q128命令定义 */
 #define W25Q128_COMMAND_ENABLE_RESET            (0x66UL)
 #define W25Q128_COMMAND_RESET_DEVICE            (0x99UL)
@@ -968,31 +967,27 @@ const norflash_t norflash_w25q128_dual = {
         .block_size = 2 * W25Q128_BLOCK_SIZE,
         .sector_size = 2 * W25Q128_SECTOR_SIZE,
         .page_size = 2 * W25Q128_PAGE_SIZE,
-    },
-    .ops = {
-        .init = w25q128_dual_init,
-        .deinit = NULL,
-        .erase_chip = w25q128_dual_erase_chip,
-        .erase_block = w25q128_dual_erase_block,
-        .erase_sector = w25q128_dual_erase_sector,
-        .program_page = w25q128_dual_program_page,
-        .read = w25q128_dual_read,
-        .memory_mapped = w25q128_dual_memory_mapped,
-    },
+    }
+    // .ops = {
+    //     .init = w25q128_dual_init,
+    //     .deinit = NULL,
+    //     .erase_chip = w25q128_dual_erase_chip,
+    //     .erase_block = w25q128_dual_erase_block,
+    //     .erase_sector = w25q128_dual_erase_sector,
+    //     .program_page = w25q128_dual_program_page,
+    //     .read = w25q128_dual_read,
+    //     .memory_mapped = w25q128_dual_memory_mapped,
+//    },
 };
 
 /* 使用的NOR Flash设备指针定义 */
 static const norflash_t *norflash = NULL;
 
 /* 支持的NOR Flash设备指针列表定义 */
-static const norflash_t *norflashs[] = {
-#ifdef NORFLASH_SUPPORT_MX25UM25645G
-    &norflash_mx25um25645g,
-#endif /* NORFLASH_SUPPORT_MX25UM25645G */
-#ifdef NORFLASH_SUPPORT_W25Q128_DUAL
-    &norflash_w25q128_dual,
-#endif /* NORFLASH_SUPPORT_W25Q128_DUAL */
-};
+//static const norflash_t *norflashs[] = {
+
+//    &norflash_w25q128_dual,
+//};
 
 /* XSPI句柄定义 */
 static XSPI_HandleTypeDef xspi1_handle = {0};
@@ -1044,14 +1039,7 @@ static uint8_t norflash_xspi1_init(XSPI_HandleTypeDef *hxspi, norflash_type_t ty
     {
         
     }
-#ifdef NORFLASH_SUPPORT_MX25UM25645G
-    else if (type == NORFlash_MX25UM25645G)
-    {
 
-        hxspi->Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
-        hxspi->Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
-    }
-#endif /* NORFLASH_SUPPORT_MX25UM25645G */
 #ifdef NORFLASH_SUPPORT_W25Q128_DUAL
     else if (type == NORFlash_W25Q128_Dual)
     {
@@ -1181,7 +1169,7 @@ norflash_type_t norflash_init(void)
             return 1;
         }
     }
-    
+#if 0    
     for (norflash_index = 0; norflash_index < (sizeof(norflashs) / sizeof(norflashs[0])); norflash_index++)
     {
         /* 初始化XSPI1 */
@@ -1198,16 +1186,20 @@ norflash_type_t norflash_init(void)
         /* 初始化NOR Flash设备 */
         if (norflashs[norflash_index]->ops.init(&xspi1_handle) == 0)
         {
-//            if (norflashs[norflash_index]->type == NORFlash_MX25UM25645G)
-//            {
-//                /* MX25UM25645G最高支持200MHz时钟 */
-//                HAL_XSPI_SetClockPrescaler(&xspi1_handle, 2 - 1);
-//            }
             norflash = norflashs[norflash_index];
             return norflash->type;
         }
     }
-    
+#else
+        /* 初始化XSPI1 */
+        norflash_xspi1_init(&xspi1_handle,NORFlash_W25Q128_Dual);
+        /* 初始化NOR Flash设备 */
+        if (w25q128_dual_init(&xspi1_handle) == 0)
+        {
+//            norflash = norflashs[norflash_index];
+            return NORFlash_W25Q128_Dual;
+        }
+#endif
     return NORFlash_Unknow;
 }
 
@@ -1220,19 +1212,19 @@ norflash_type_t norflash_init(void)
  */
 uint8_t norflash_deinit(void)
 {
-    if (norflash == NULL)
-    {
-        return 1;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 1;
+//    }
     
     /* 反初始化NOR Flash设备 */
-    if (norflash->ops.deinit != NULL)
-    {
-        if (norflash->ops.deinit(&xspi1_handle) != 0)
-        {
-            return 1;
-        }
-    }
+//    if (norflash->ops.deinit != NULL)
+//    {
+//        if (norflash->ops.deinit(&xspi1_handle) != 0)
+//        {
+//            return 1;
+//        }
+//    }
     
     /* 反初始化XSPI1 */
     if (norflash_xspi1_deinit(&xspi1_handle) != 0)
@@ -1254,24 +1246,23 @@ uint8_t norflash_deinit(void)
  */
 uint8_t norflash_erase_chip(void)
 {
-    if (norflash == NULL)
-    {
-        return 1;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 1;
+//    }
     
-    if (xspi1_handle.State == HAL_XSPI_STATE_BUSY_MEM_MAPPED)
-    {
-        return 1;
-    }
+//    if (xspi1_handle.State == HAL_XSPI_STATE_BUSY_MEM_MAPPED)
+//    {
+//        return 1;
+//    }
     
     /* 全片擦除NOR Flash设备 */
-    if (norflash->ops.erase_chip != NULL)
-    {
-        if (norflash->ops.erase_chip(&xspi1_handle) == 0)
+
+        if (w25q128_dual_erase_chip(&xspi1_handle) == 0)
         {
             return 0;
         }
-    }
+
     
     return 1;
 }
@@ -1285,10 +1276,10 @@ uint8_t norflash_erase_chip(void)
  */
 uint8_t norflash_erase_block(uint32_t address)
 {
-    if (norflash == NULL)
-    {
-        return 1;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 1;
+//    }
     
     if (xspi1_handle.State == HAL_XSPI_STATE_BUSY_MEM_MAPPED)
     {
@@ -1296,13 +1287,12 @@ uint8_t norflash_erase_block(uint32_t address)
     }
     
     /* 块擦除NOR Flash设备 */
-    if (norflash->ops.erase_block != NULL)
-    {
-        if (norflash->ops.erase_block(&xspi1_handle, address) == 0)
+
+        if (w25q128_dual_erase_block(&xspi1_handle, address) == 0)
         {
             return 0;
         }
-    }
+
     
     return 1;
 }
@@ -1316,10 +1306,10 @@ uint8_t norflash_erase_block(uint32_t address)
  */
 uint8_t norflash_erase_sector(uint32_t address)
 {
-    if (norflash == NULL)
-    {
-        return 1;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 1;
+//    }
     
     if (xspi1_handle.State == HAL_XSPI_STATE_BUSY_MEM_MAPPED)
     {
@@ -1327,13 +1317,11 @@ uint8_t norflash_erase_sector(uint32_t address)
     }
     
     /* 扇区擦除NOR Flash设备 */
-    if (norflash->ops.erase_sector != NULL)
-    {
-        if (norflash->ops.erase_sector(&xspi1_handle, address) == 0)
+
+        if (w25q128_dual_erase_sector(&xspi1_handle, address) == 0)
         {
             return 0;
         }
-    }
     
     return 1;
 }
@@ -1349,29 +1337,28 @@ uint8_t norflash_erase_sector(uint32_t address)
  */
 uint8_t norflash_program_page(uint32_t address, uint8_t *data, uint32_t length)
 {
-    if (norflash == NULL)
-    {
-        return 1;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 1;
+//    }
     
     if (xspi1_handle.State == HAL_XSPI_STATE_BUSY_MEM_MAPPED)
     {
         return 1;
     }
     
-    if (length > norflash->parameter.page_size)
+    if (length > norflash_w25q128_dual.parameter.page_size)
     {
         return 1;
     }
     
     /* 页编程NOR Flash设备 */
-    if (norflash->ops.program_page != NULL)
+
+    if (w25q128_dual_program_page(&xspi1_handle, address, data, length) == 0)
     {
-        if (norflash->ops.program_page(&xspi1_handle, address, data, length) == 0)
-        {
-            return 0;
-        }
+        return 0;
     }
+
     
     return 1;
 }
@@ -1390,10 +1377,10 @@ uint8_t norflash_read(uint32_t address, uint8_t *data, uint32_t length)
     uint32_t index;
     uint32_t length_16b;
     
-    if (norflash == NULL)
-    {
-        return 1;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 1;
+//    }
     
     /* 内存映射状态下直接从映射地址读取 */
     if (xspi1_handle.State == HAL_XSPI_STATE_BUSY_MEM_MAPPED)
@@ -1413,13 +1400,12 @@ uint8_t norflash_read(uint32_t address, uint8_t *data, uint32_t length)
     }
     
     /* 读NOR Flash设备 */
-    if (norflash->ops.read != NULL)
-    {
-        if (norflash->ops.read(&xspi1_handle, address, data, length) == 0)
+
+        if (w25q128_dual_read(&xspi1_handle, address, data, length) == 0)
         {
             return 0;
         }
-    }
+
     
     return 1;
 }
@@ -1433,10 +1419,10 @@ uint8_t norflash_read(uint32_t address, uint8_t *data, uint32_t length)
  */
 uint8_t norflash_memory_mapped(void)
 {
-    if (norflash == NULL)
-    {
-        return 1;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 1;
+//    }
     
     if (xspi1_handle.State == HAL_XSPI_STATE_BUSY_MEM_MAPPED)
     {
@@ -1444,13 +1430,11 @@ uint8_t norflash_memory_mapped(void)
     }
     
     /* 开启NOR Flash设备内存映射 */
-    if (norflash->ops.memory_mapped != NULL)
-    {
-        if (norflash->ops.memory_mapped(&xspi1_handle) == 0)
+
+        if (w25q128_dual_memory_mapped(&xspi1_handle) == 0)
         {
             return 0;
         }
-    }
     
     return 1;
 }
@@ -1462,12 +1446,12 @@ uint8_t norflash_memory_mapped(void)
  */
 uint8_t norflash_get_empty_value(void)
 {
-    if (norflash == NULL)
-    {
-        return 0;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 0;
+//    }
     
-    return norflash->parameter.empty_value;
+    return norflash_w25q128_dual.parameter.empty_value;
 }
 
 /**
@@ -1477,12 +1461,12 @@ uint8_t norflash_get_empty_value(void)
  */
 uint32_t norflash_get_chip_size(void)
 {
-    if (norflash == NULL)
-    {
-        return 0;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 0;
+//    }
     
-    return norflash->parameter.chip_size;
+    return norflash_w25q128_dual.parameter.chip_size;
 }
 
 /**
@@ -1492,12 +1476,12 @@ uint32_t norflash_get_chip_size(void)
  */
 uint32_t norflash_get_block_size(void)
 {
-    if (norflash == NULL)
-    {
-        return 0;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 0;
+//    }
     
-    return norflash->parameter.block_size;
+    return norflash_w25q128_dual.parameter.block_size;
 }
 
 /**
@@ -1507,12 +1491,12 @@ uint32_t norflash_get_block_size(void)
  */
 uint32_t norflash_get_sector_size(void)
 {
-    if (norflash == NULL)
-    {
-        return 0;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 0;
+//    }
     
-    return norflash->parameter.sector_size;
+    return norflash_w25q128_dual.parameter.sector_size;
 }
 
 /**
@@ -1522,12 +1506,12 @@ uint32_t norflash_get_sector_size(void)
  */
 uint32_t norflash_get_page_size(void)
 {
-    if (norflash == NULL)
-    {
-        return 0;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 0;
+//    }
     
-    return norflash->parameter.page_size;
+    return norflash_w25q128_dual.parameter.page_size;
 }
 
 /**
@@ -1553,10 +1537,10 @@ uint8_t norflash_write(uint32_t address, uint8_t *data, uint32_t length)
     uint32_t page_remain;
     uint32_t page_write_length;
     
-    if (norflash == NULL)
-    {
-        return 1;
-    }
+//    if (norflash == NULL)
+//    {
+//        return 1;
+//    }
     
     if (xspi1_handle.State == HAL_XSPI_STATE_BUSY_MEM_MAPPED)
     {
@@ -1569,6 +1553,7 @@ uint8_t norflash_write(uint32_t address, uint8_t *data, uint32_t length)
     /* NOR Flash扇区缓冲区大小校验 */
     if (sector_size > (sizeof(norflash_sector_buffer) / sizeof(norflash_sector_buffer[0])))
     {
+
         return 1;
     }
     
@@ -1583,6 +1568,7 @@ uint8_t norflash_write(uint32_t address, uint8_t *data, uint32_t length)
         /* 读取NOR Flash扇区数据 */
         if(norflash_read(sectors_index * sector_size, norflash_sector_buffer, sector_size) != 0)
         {
+
             return 1;
         }
         

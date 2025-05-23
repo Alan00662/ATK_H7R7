@@ -103,19 +103,20 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	printf_tx1("init ok \n");
 	norflash_type = norflash_init();
+	printf_tx1("norflash_type = %d\n",norflash_type);
 	if (norflash_type == NORFlash_W25Q128_Dual)
   {
 		printf_tx1("Is NORFlash :W25Q128_Dual\n");
 	}
 	    /* 获取NOR Flash片大小 */
-    flashsize = norflash_get_chip_size();
-	printf_tx1("Start Write...\n");
-	if(norflash_write(flashsize - TEXT_SIZE, g_text_buf, TEXT_SIZE)!=0) printf_tx1("norflash_write Err\n");
+//    flashsize = norflash_get_chip_size();
+//	printf_tx1("Start Write...\n");
+//	if(norflash_write(flashsize - TEXT_SIZE, g_text_buf, TEXT_SIZE)!=0) printf_tx1("norflash_write Err\n");
 //	LL_mDelay(10);
-//  norflash_memory_mapped();
-	LL_mDelay(100);
-	if(norflash_read(flashsize - TEXT_SIZE, data, TEXT_SIZE)!=0) printf_tx1("norflash_read Err\n");
-	printf_tx1("The Data Readed Is:%s\n",(char *)data);
+  norflash_memory_mapped();
+//	LL_mDelay(100);
+//	if(norflash_read(flashsize - TEXT_SIZE, data, TEXT_SIZE)!=0) printf_tx1("norflash_read Err\n");
+//	printf_tx1("The Data Readed Is:%s\n",(char *)data);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -125,8 +126,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		LL_GPIO_TogglePin(LED0_GPIO_Port, LED0_Pin);
 		LL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-		LL_mDelay(400);
+		LL_mDelay(300);
   }
   /* USER CODE END 3 */
 }
